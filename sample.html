@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Census Report</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.5.1/chart.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@2.0.0/dist/chartjs-plugin-datalabels.min.js"></script>
+</head>
+<body>
+    <h1>Census Report</h1>
+    <script src="file:///C:/Users/Lenovo/Documents/websites/Simple%20Website%20-%20CodingLab/core.js"></script>
+<script src="file:///C:/Users/Lenovo/Documents/websites/Simple%20Website%20-%20CodingLab/charts.js"></script>
+<div id="chartdiv"></div>
+
+    <form id="censusForm">
+        <label for="category1">Category 1:</label>
+        <input type="number" id="category1" name="category1" min="0" required><br>
+
+        <label for="category2">Category 2:</label>
+        <input type="number" id="category2" name="category2" min="0" required><br>
+
+        <!-- Add more category input fields as needed -->
+
+        <button type="submit">Generate Chart</button>
+    </form>
+
+    <div id="chartContainer">
+        <canvas id="censusChart"></canvas>
+    </div>
+
+    <script>
+        document.getElementById("censusForm").addEventListener("submit", function (event) {
+            event.preventDefault();
+
+            // Get the input values
+            var category1Value = parseInt(document.getElementById("category1").value);
+            var category2Value = parseInt(document.getElementById("category2").value);
+
+            // Create the chart
+            var chartData = {
+                labels: ["Category 1", "Category 2"],
+                datasets: [{
+                    label: "Population",
+                    data: [category1Value, category2Value],
+                    backgroundColor: ["rgba(255, 99, 132, 0.6)", "rgba(54, 162, 235, 0.6)"]
+                }]
+            };
+
+            var ctx = document.getElementById("censusChart").getContext("2d");
+            var censusChart = new Chart(ctx, {
+                type: 'pie',
+                data: chartData,
+                options: {
+                    plugins: {
+                        datalabels: {
+                            color: 'white',
+                            font: {
+                                weight: 'bold'
+                            },
+                            formatter: function (value, context) {
+                                return context.chart.data.labels[context.dataIndex] + ': ' + value;
+                            }
+                        }
+                    }
+                }
+            });
+        });
+    </script>
+</body>
+</html>
